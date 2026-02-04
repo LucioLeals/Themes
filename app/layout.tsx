@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'Calendário de Vendas',
@@ -63,7 +64,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className="font-sans">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
