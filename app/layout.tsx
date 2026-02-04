@@ -1,10 +1,33 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Roboto, Roboto_Mono } from 'next/font/google';
 import { Providers } from './providers';
 
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-roboto',
+  display: 'swap',
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: 'Calendário de Vendas',
-  description: 'Sistema de visualização de calendário com múltiplos temas',
+  title: 'Calendario de Vendas',
+  description: 'Sistema de visualizacao de calendario com multiplos temas',
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#111827' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -13,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" className={`${roboto.variable} ${robotoMono.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

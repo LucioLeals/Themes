@@ -63,12 +63,19 @@ const LeadCell = React.memo(function LeadCell({ value }: { value: number }) {
 });
 
 const TotalCell = React.memo(function TotalCell({ value }: { value: number }) {
+  const getStyle = (val: number) => {
+    if (val === 0) return 'bg-muted/50 text-muted-foreground border-border/50';
+    if (val <= 10) return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30';
+    if (val <= 25) return 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30';
+    return 'bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-500/30';
+  };
+
   return (
     <div
       className={`
-        flex items-center justify-center w-10 h-6 rounded-md text-xs font-bold
-        bg-secondary/70 text-secondary-foreground border border-border/70
-        shadow-sm transition-all duration-300 ease-out
+        flex items-center justify-center w-11 h-7 rounded-lg text-xs font-bold
+        border shadow-sm transition-all duration-300 ease-out
+        ${getStyle(value)}
       `}
     >
       <span>{value}</span>
@@ -87,16 +94,23 @@ const DayTotalCell = React.memo(function DayTotalCell({ value }: { value: number
 const SellerRowView = React.memo(
   function SellerRowView({ seller, daysArray }: { seller: SellerRow; daysArray: number[] }) {
     return (
-      <tr className="border-b border-border/30 hover:bg-accent/20 transition-colors duration-75">
-        <td className="sticky left-0 z-10 bg-card/90 backdrop-blur-md px-3 py-1.5 text-xs font-medium text-foreground">
-          {seller.name}
+      <tr className="border-b border-border/40 hover:bg-accent/30 transition-colors duration-100 group">
+        <td className="sticky left-0 z-10 bg-card/95 backdrop-blur-md px-4 py-2 text-sm font-medium text-foreground group-hover:bg-accent/30 transition-colors">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <span className="text-xs font-semibold text-primary">
+                {seller.name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+            <span className="truncate max-w-[120px]" title={seller.name}>{seller.name}</span>
+          </div>
         </td>
         {daysArray.map(day => (
-          <td key={day} className="px-0.5 py-1 text-center">
+          <td key={day} className="px-1 py-1.5 text-center">
             <LeadCell value={seller.leads[day] || 0} />
           </td>
         ))}
-        <td className="sticky right-0 z-10 bg-card/90 backdrop-blur-md px-3 py-1.5 text-center">
+        <td className="sticky right-0 z-10 bg-card/95 backdrop-blur-md px-4 py-2 text-center group-hover:bg-accent/30 transition-colors">
           <TotalCell value={seller.total} />
         </td>
       </tr>
@@ -224,15 +238,15 @@ function StatsBadge({
   variant: 'green' | 'purple' | 'orange';
 }) {
   const variants = {
-    green: 'bg-emerald-600/90 text-white',
-    purple: 'bg-violet-600/90 text-white',
-    orange: 'bg-amber-500/90 text-white',
+    green: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
+    purple: 'bg-violet-500/15 text-violet-700 dark:text-violet-400 border-violet-500/30',
+    orange: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30',
   };
 
   return (
-    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${variants[variant]}`}>
-      <span>{label}:</span>
-      <span>{value}</span>
+    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border ${variants[variant]}`}>
+      <span className="opacity-80">{label}</span>
+      <span className="font-bold">{value}</span>
     </div>
   );
 }
@@ -573,89 +587,126 @@ const CalendarioMensalRealTime: React.FC<CalendarioMensalRealTimeProps> = ({ isA
   }, [loading, computed]);
 
   return (
-    <div className="flex flex-col flex-1 px-0 py-2 -mx-4 md:-mx-6">
-      <div className="w-full space-y-2 px-2 md:px-3">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 flex-nowrap overflow-x-auto whitespace-nowrap pr-2">
-            <h1 className="text-base font-semibold text-foreground shrink-0">
-              Calendário Mensal - {monthNames[mes]} {ano}
-            </h1>
+    <div className="flex flex-col flex-1">
+      <div className="w-full space-y-4">
+        {/* Header Section */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          {/* Title and Stats */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                  <line x1="16" x2="16" y1="2" y2="6" />
+                  <line x1="8" x2="8" y1="2" y2="6" />
+                  <line x1="3" x2="21" y1="10" y2="10" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">
+                  {monthNames[mes]} {ano}
+                </h1>
+                <p className="text-sm text-muted-foreground">Acompanhamento de vendas</p>
+              </div>
+            </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2 flex-wrap">
               <StatsBadge label="Ativos" value={estatisticas.ativos} variant="green" />
               <StatsBadge label="Receptivos" value={estatisticas.receptivos} variant="purple" />
               <StatsBadge label="Total" value={estatisticas.total} variant="orange" />
             </div>
-
-            <div className="flex items-center gap-2 ml-2 pl-3 border-l border-border/40 shrink-0">
-              <FilterDropdown label="Filial" value={filialSelecionada} options={filiaisOptions} onChange={setFilialSelecionada} />
-              <FilterDropdown label="Estado" value={estadoSelecionado} options={estadosOptions} onChange={setEstadoSelecionado} />
-              <FilterDropdown label="Status" value={statusSelecionado} options={statusOptions} onChange={v => setStatusSelecionado(v as StatusContato)} />
-              <FilterDropdown label="Origem" value={origemSelecionada} options={origemOptions} onChange={v => setOrigemSelecionada(v as OrigemContato)} />
-            </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => navigateMonth('prev')}
-              className="p-2 rounded-lg bg-card/80 border border-border/60 hover:bg-accent/50 hover:border-border transition-all duration-200"
-              type="button"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => navigateMonth('next')}
-              className="p-2 rounded-lg bg-card/80 border border-border/60 hover:bg-accent/50 hover:border-border transition-all duration-200"
-              type="button"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center bg-card/80 border border-border/60 rounded-xl p-1">
+              <button
+                onClick={() => navigateMonth('prev')}
+                className="p-2 rounded-lg hover:bg-accent/50 transition-all duration-200"
+                type="button"
+                aria-label="Mes anterior"
+              >
+                <ChevronLeft className="w-4 h-4 text-foreground/70" />
+              </button>
+              <span className="px-3 text-sm font-medium text-foreground/80 min-w-[100px] text-center">
+                {monthNames[mes].slice(0, 3)} {ano}
+              </span>
+              <button
+                onClick={() => navigateMonth('next')}
+                className="p-2 rounded-lg hover:bg-accent/50 transition-all duration-200"
+                type="button"
+                aria-label="Proximo mes"
+              >
+                <ChevronRight className="w-4 h-4 text-foreground/70" />
+              </button>
+            </div>
             <button
               onClick={() => {
                 forceFullSync();
                 refresh();
                 setRebuildToken(t => t + 1);
               }}
-              className="p-2 rounded-lg bg-card/80 border border-border/60 hover:bg-accent/50 hover:border-border transition-all duration-200"
-              title="Atualizar"
+              className="p-2.5 rounded-xl bg-card/80 border border-border/60 hover:bg-accent/50 hover:border-border transition-all duration-200"
+              title="Atualizar dados"
               type="button"
             >
-              <RefreshCw className={`w-4 h-4 ${hasRecentUpdates ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 text-foreground/70 ${hasRecentUpdates ? 'animate-spin' : ''}`} />
             </button>
           </div>
         </div>
 
+        {/* Filters Section */}
+        <div className="flex items-center gap-2 flex-wrap p-3 bg-muted/30 rounded-xl border border-border/40">
+          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider mr-2">Filtros:</span>
+          <FilterDropdown label="Filial" value={filialSelecionada} options={filiaisOptions} onChange={setFilialSelecionada} />
+          <FilterDropdown label="Estado" value={estadoSelecionado} options={estadosOptions} onChange={setEstadoSelecionado} />
+          <FilterDropdown label="Status" value={statusSelecionado} options={statusOptions} onChange={v => setStatusSelecionado(v as StatusContato)} />
+          <FilterDropdown label="Origem" value={origemSelecionada} options={origemOptions} onChange={v => setOrigemSelecionada(v as OrigemContato)} />
+        </div>
+
+        {/* Calendar Table */}
         <motion.div
-          className="bg-card/50 border border-border/60 rounded-xl overflow-hidden shadow-lg backdrop-blur-sm"
+          className="bg-card border border-border/60 rounded-2xl overflow-hidden shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="relative max-h-[calc(100vh-170px)] overflow-y-auto overflow-x-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+          <div className="relative max-h-[calc(100vh-280px)] overflow-y-auto overflow-x-auto custom-scrollbar">
+            {/* Loading indicator */}
             {loading && renderComputed.sellers.length > 0 && (
               <div className="pointer-events-none sticky top-0 left-0 z-[60] w-full">
-                <div className="flex justify-end p-2">
-                  <div className="flex items-center gap-2 rounded-lg bg-card/90 border border-border/60 px-3 py-1.5 text-xs text-muted-foreground backdrop-blur">
+                <div className="flex justify-end p-3">
+                  <div className="flex items-center gap-2 rounded-xl bg-primary/10 border border-primary/20 px-4 py-2 text-xs font-medium text-primary backdrop-blur-sm shadow-sm">
                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
                       <RefreshCw className="w-3.5 h-3.5" />
                     </motion.div>
-                    <span>Atualizando…</span>
+                    <span>Atualizando dados...</span>
                   </div>
                 </div>
               </div>
             )}
             <table className="w-full border-collapse">
               <thead className="sticky top-0 z-30">
-                <tr className="bg-muted/30">
-                  <th className="sticky left-0 z-40 bg-muted/80 backdrop-blur-md px-3 py-2 text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border-b border-border/50 min-w-[140px]">
+                <tr className="bg-muted/50">
+                  <th className="sticky left-0 z-40 bg-muted/95 backdrop-blur-md px-4 py-3 text-left text-xs font-semibold text-foreground/80 uppercase tracking-wider border-b border-border/60 min-w-[160px]">
                     Vendedor
                   </th>
-                  {daysArray.map(day => (
-                    <th key={day} className="px-0.5 py-2 text-center text-[11px] font-medium text-muted-foreground border-b border-border/50 min-w-[40px]">
-                      {day}
-                    </th>
-                  ))}
-                  <th className="sticky right-0 z-40 bg-muted/80 backdrop-blur-md px-3 py-2 text-center text-[11px] font-semibold text-foreground uppercase tracking-wider border-b border-border/50 min-w-[60px]">
+                  {daysArray.map(day => {
+                    const isToday = isTodayMonth && day === todayDay;
+                    return (
+                      <th 
+                        key={day} 
+                        className={`px-1 py-3 text-center text-xs font-semibold border-b border-border/60 min-w-[42px] transition-colors ${
+                          isToday 
+                            ? 'bg-primary/10 text-primary' 
+                            : 'text-muted-foreground'
+                        }`}
+                      >
+                        {day}
+                      </th>
+                    );
+                  })}
+                  <th className="sticky right-0 z-40 bg-muted/95 backdrop-blur-md px-4 py-3 text-center text-xs font-semibold text-foreground uppercase tracking-wider border-b border-border/60 min-w-[70px]">
                     Total
                   </th>
                 </tr>
@@ -663,25 +714,52 @@ const CalendarioMensalRealTime: React.FC<CalendarioMensalRealTimeProps> = ({ isA
               <tbody>
                 {error ? (
                   <tr>
-                    <td colSpan={daysArray.length + 2} className="px-4 py-6 text-sm text-destructive">
-                      {String(error)}
+                    <td colSpan={daysArray.length + 2} className="px-6 py-12">
+                      <div className="flex flex-col items-center justify-center gap-3 text-center">
+                        <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-destructive">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" x2="12" y1="8" y2="12" />
+                            <line x1="12" x2="12.01" y1="16" y2="16" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-destructive">Erro ao carregar dados</p>
+                          <p className="text-xs text-muted-foreground mt-1">{String(error)}</p>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ) : loading && renderComputed.sellers.length === 0 ? (
                   <tr>
-                    <td colSpan={daysArray.length + 2} className="px-4 py-10 text-sm text-muted-foreground">
-                      <div className="flex items-center justify-center gap-3">
-                        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
-                          <RefreshCw className="w-4 h-4" />
-                        </motion.div>
-                        <span>Carregando calendário...</span>
+                    <td colSpan={daysArray.length + 2} className="px-6 py-16">
+                      <div className="flex flex-col items-center justify-center gap-4">
+                        <div className="relative">
+                          <div className="w-12 h-12 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
+                        </div>
+                        <div className="text-center">
+                          <p className="text-sm font-medium text-foreground">Carregando calendario</p>
+                          <p className="text-xs text-muted-foreground mt-1">Buscando dados de vendedores...</p>
+                        </div>
                       </div>
                     </td>
                   </tr>
                 ) : renderComputed.sellers.length === 0 ? (
                   <tr>
-                    <td colSpan={daysArray.length + 2} className="px-4 py-10 text-sm text-muted-foreground">
-                      Nenhum vendedor encontrado para os filtros selecionados.
+                    <td colSpan={daysArray.length + 2} className="px-6 py-16">
+                      <div className="flex flex-col items-center justify-center gap-3 text-center">
+                        <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <line x1="17" x2="22" y1="11" y2="11" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Nenhum vendedor encontrado</p>
+                          <p className="text-xs text-muted-foreground mt-1">Tente ajustar os filtros selecionados</p>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ) : (
@@ -690,17 +768,24 @@ const CalendarioMensalRealTime: React.FC<CalendarioMensalRealTimeProps> = ({ isA
                       <SellerRowView key={seller.id} seller={seller} daysArray={daysArray} />
                     ))}
 
-                    <tr className="bg-muted/40 border-t-2 border-border/60">
-                      <td className="sticky left-0 z-10 bg-muted/80 backdrop-blur-md px-3 py-2 text-xs font-bold text-foreground uppercase tracking-wide">
+                    <tr className="bg-muted/60 border-t-2 border-border">
+                      <td className="sticky left-0 z-10 bg-muted/95 backdrop-blur-md px-4 py-3 text-xs font-bold text-foreground uppercase tracking-wide">
                         Total por Dia
                       </td>
-                      {daysArray.map(day => (
-                        <td key={day} className="px-0.5 py-1.5 text-center">
-                          <DayTotalCell value={renderComputed.dailyTotals[day] || 0} />
-                        </td>
-                      ))}
-                      <td className="sticky right-0 z-10 bg-muted/80 backdrop-blur-md px-3 py-1.5 text-center">
-                        <motion.div className="flex items-center justify-center w-10 h-7 rounded-md text-xs font-bold bg-gradient-to-br from-primary/90 to-primary text-primary-foreground border border-primary/40 shadow-lg shadow-primary/20">
+                      {daysArray.map(day => {
+                        const isToday = isTodayMonth && day === todayDay;
+                        return (
+                          <td key={day} className={`px-1 py-2 text-center ${isToday ? 'bg-primary/5' : ''}`}>
+                            <DayTotalCell value={renderComputed.dailyTotals[day] || 0} />
+                          </td>
+                        );
+                      })}
+                      <td className="sticky right-0 z-10 bg-muted/95 backdrop-blur-md px-4 py-2 text-center">
+                        <motion.div 
+                          className="flex items-center justify-center w-12 h-8 rounded-lg text-sm font-bold bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25"
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                        >
                           <span>{renderComputed.grandTotal}</span>
                         </motion.div>
                       </td>
