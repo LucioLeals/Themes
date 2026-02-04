@@ -1,4 +1,4 @@
-import CalendarioMensalRealTime from '@/CalendarioMensalRealTime';
+import CalendarioMensalRealTime from '../CalendarioMensalRealTime';
 
 export default function Page() {
   return (
