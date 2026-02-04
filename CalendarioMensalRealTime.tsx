@@ -96,14 +96,7 @@ const SellerRowView = React.memo(
     return (
       <tr className="border-b border-border/40 hover:bg-accent/30 transition-colors duration-100 group">
         <td className="sticky left-0 z-10 bg-card/95 backdrop-blur-md px-4 py-2 text-sm font-medium text-foreground group-hover:bg-accent/30 transition-colors">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <span className="text-xs font-semibold text-primary">
-                {seller.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <span className="truncate max-w-[120px]" title={seller.name}>{seller.name}</span>
-          </div>
+          <span className="truncate max-w-[140px] block" title={seller.name}>{seller.name}</span>
         </td>
         {daysArray.map(day => (
           <td key={day} className="px-1 py-1.5 text-center">

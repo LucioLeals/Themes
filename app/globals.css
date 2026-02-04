@@ -178,14 +178,14 @@
 }
 
 .alter {
-  /* Alter Theme - True dark mode with cyan accent */
+  /* Alter Theme - Pure dark mode with white/gray accents */
   --background: #0a0a0a;
   --foreground: #fafafa;
   --card: #141414;
   --card-foreground: #fafafa;
   --popover: #141414;
   --popover-foreground: #fafafa;
-  --primary: #22d3ee;
+  --primary: #e5e5e5;
   --primary-foreground: #0a0a0a;
   --secondary: #1f1f1f;
   --secondary-foreground: #fafafa;
@@ -197,20 +197,20 @@
   --destructive-foreground: #fafafa;
   --border: #2a2a2a;
   --input: #2a2a2a;
-  --ring: #22d3ee;
-  --chart-1: #22d3ee;
-  --chart-2: #06b6d4;
-  --chart-3: #0891b2;
-  --chart-4: #14b8a6;
-  --chart-5: #2dd4bf;
+  --ring: #d4d4d4;
+  --chart-1: #e5e5e5;
+  --chart-2: #a3a3a3;
+  --chart-3: #737373;
+  --chart-4: #d4d4d4;
+  --chart-5: #525252;
   --sidebar: #0a0a0a;
   --sidebar-foreground: #fafafa;
-  --sidebar-primary: #22d3ee;
+  --sidebar-primary: #e5e5e5;
   --sidebar-primary-foreground: #0a0a0a;
   --sidebar-accent: #1a1a1a;
   --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #2a2a2a;
-  --sidebar-ring: #22d3ee;
+  --sidebar-ring: #d4d4d4;
 
   /* App Header - Alter */
   --header-bg: #0a0a0a;
@@ -224,7 +224,7 @@
   --header-toggle-border: #3a3a3a;
   --header-toggle-active-text: #fafafa;
   --header-toggle-inactive-text: #a1a1aa;
-  --header-toggle-indicator: #22d3ee;
+  --header-toggle-indicator: #e5e5e5;
 }
 
 @theme inline {
