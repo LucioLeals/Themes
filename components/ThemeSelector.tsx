@@ -42,11 +42,11 @@ const themeOptions: ThemeOption[] = [
   {
     value: 'alter',
     label: 'Alter',
-    description: 'Visual moderno e vibrante',
+    description: 'Tema escuro com teal',
     icon: <Sparkles className="w-4 h-4" />,
     colors: {
-      bg: 'bg-slate-800',
-      accent: 'bg-violet-500',
+      bg: 'bg-slate-950',
+      accent: 'bg-teal-500',
     },
   },
 ];
