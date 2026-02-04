@@ -5,8 +5,8 @@ import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCalendarioRealTime } from '../../hooks/useCalendarioRealTime';
-import { vendedoresService } from '../../services';
+import { useCalendarioRealTime } from './hooks/useCalendarioRealTime';
+import { vendedoresService } from './services';
 
 interface CalendarioMensalRealTimeProps {
   dados?: Array<{
