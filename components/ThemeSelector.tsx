@@ -54,8 +54,14 @@ const themeOptions: ThemeOption[] = [
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Avoid hydration mismatch by only rendering theme-dependent content after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const currentTheme = themeOptions.find((t) => t.value === theme) || themeOptions[0];
 
@@ -80,6 +86,16 @@ export function ThemeSelector() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Show a static placeholder during SSR to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border/60 bg-card/80 backdrop-blur-sm shadow-sm h-10 w-[88px] sm:w-[120px]">
+        <div className="w-4 h-4 rounded bg-muted animate-pulse" />
+        <div className="w-12 h-4 rounded bg-muted animate-pulse hidden sm:block" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
@@ -192,6 +208,19 @@ export function ThemeSelector() {
 // Compact version for tight spaces
 export function ThemeSelectorCompact() {
   const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="p-2 rounded-lg border border-border/60 bg-card/80 backdrop-blur-sm shadow-sm">
+        <div className="w-4 h-4 rounded bg-muted animate-pulse" />
+      </div>
+    );
+  }
 
   const currentIcon =
     theme === 'light' ? (
