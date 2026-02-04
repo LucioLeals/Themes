@@ -178,53 +178,53 @@
 }
 
 .alter {
-  /* Alter Theme - Deep slate with teal/cyan accent */
-  --background: oklch(0.145 0.014 260);
-  --foreground: oklch(0.95 0.01 240);
-  --card: oklch(0.18 0.016 260);
-  --card-foreground: oklch(0.95 0.01 240);
-  --popover: oklch(0.18 0.016 260);
-  --popover-foreground: oklch(0.95 0.01 240);
-  --primary: oklch(0.72 0.15 185);
-  --primary-foreground: oklch(0.145 0.014 260);
-  --secondary: oklch(0.22 0.018 260);
-  --secondary-foreground: oklch(0.95 0.01 240);
-  --muted: oklch(0.20 0.016 260);
-  --muted-foreground: oklch(0.65 0.02 240);
-  --accent: oklch(0.25 0.02 260);
-  --accent-foreground: oklch(0.95 0.01 240);
-  --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.28 0.02 260);
-  --input: oklch(0.28 0.02 260);
-  --ring: oklch(0.72 0.15 185);
-  --chart-1: oklch(0.72 0.15 185);
-  --chart-2: oklch(0.65 0.18 145);
-  --chart-3: oklch(0.60 0.12 220);
-  --chart-4: oklch(0.70 0.16 165);
-  --chart-5: oklch(0.55 0.14 200);
-  --sidebar: oklch(0.12 0.012 260);
-  --sidebar-foreground: oklch(0.95 0.01 240);
-  --sidebar-primary: oklch(0.72 0.15 185);
-  --sidebar-primary-foreground: oklch(0.145 0.014 260);
-  --sidebar-accent: oklch(0.18 0.016 260);
-  --sidebar-accent-foreground: oklch(0.95 0.01 240);
-  --sidebar-border: oklch(0.25 0.018 260);
-  --sidebar-ring: oklch(0.72 0.15 185);
+  /* Alter Theme - True dark mode with cyan accent */
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #141414;
+  --card-foreground: #fafafa;
+  --popover: #141414;
+  --popover-foreground: #fafafa;
+  --primary: #22d3ee;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #fafafa;
+  --muted: #1a1a1a;
+  --muted-foreground: #a1a1aa;
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #22d3ee;
+  --chart-1: #22d3ee;
+  --chart-2: #06b6d4;
+  --chart-3: #0891b2;
+  --chart-4: #14b8a6;
+  --chart-5: #2dd4bf;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #22d3ee;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #2a2a2a;
+  --sidebar-ring: #22d3ee;
 
   /* App Header - Alter */
-  --header-bg: oklch(0.12 0.012 260);
-  --header-border: oklch(0.28 0.02 260);
-  --header-foreground: oklch(0.95 0.01 240);
-  --header-muted: oklch(0.65 0.02 240);
-  --header-hover-bg: oklch(0.18 0.016 260);
-  --header-button-border: oklch(0.28 0.02 260);
-  --header-separator: oklch(0.35 0.02 260);
-  --header-toggle-bg: oklch(0.18 0.016 260);
-  --header-toggle-border: oklch(0.30 0.02 260);
-  --header-toggle-active-text: oklch(0.95 0.01 240);
-  --header-toggle-inactive-text: oklch(0.65 0.02 240);
-  --header-toggle-indicator: oklch(0.72 0.15 185);
+  --header-bg: #0a0a0a;
+  --header-border: #2a2a2a;
+  --header-foreground: #fafafa;
+  --header-muted: #a1a1aa;
+  --header-hover-bg: #1a1a1a;
+  --header-button-border: #2a2a2a;
+  --header-separator: #3a3a3a;
+  --header-toggle-bg: #1a1a1a;
+  --header-toggle-border: #3a3a3a;
+  --header-toggle-active-text: #fafafa;
+  --header-toggle-inactive-text: #a1a1aa;
+  --header-toggle-indicator: #22d3ee;
 }
 
 @theme inline {
@@ -355,6 +355,16 @@
     background-size: 200% 100%;
   }
 
+  .alter .skeleton-shimmer {
+    background: linear-gradient(90deg,
+        #1a1a1a 0%,
+        #1a1a1a 40%,
+        #2a2a2a 50%,
+        #1a1a1a 60%,
+        #1a1a1a 100%);
+    background-size: 200% 100%;
+  }
+
   /* Indeterminate loading bar (Material-like) */
   @keyframes indeterminate-slide {
     0% {
@@ -376,6 +386,10 @@
 
   .dark .loading-bar {
     background: rgba(148, 163, 184, 0.18);
+  }
+
+  .alter .loading-bar {
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .loading-bar::before {
@@ -493,10 +507,10 @@
     --scrollbar-thumb-active-dark: #94a3b8;
 
     /* Alter theme scrollbar colors */
-    --scrollbar-track-alter: oklch(0.18 0.016 260);
-    --scrollbar-thumb-alter: oklch(0.35 0.025 260);
-    --scrollbar-thumb-hover-alter: oklch(0.45 0.03 260);
-    --scrollbar-thumb-active-alter: oklch(0.55 0.035 260);
+    --scrollbar-track-alter: #141414;
+    --scrollbar-thumb-alter: #3a3a3a;
+    --scrollbar-thumb-hover-alter: #4a4a4a;
+    --scrollbar-thumb-active-alter: #5a5a5a;
 
     /* Suporte nativo para color-scheme */
     color-scheme: light dark;

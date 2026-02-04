@@ -65,9 +65,9 @@ const LeadCell = React.memo(function LeadCell({ value }: { value: number }) {
 const TotalCell = React.memo(function TotalCell({ value }: { value: number }) {
   const getStyle = (val: number) => {
     if (val === 0) return 'bg-muted/50 text-muted-foreground border-border/50';
-    if (val <= 10) return 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30';
-    if (val <= 25) return 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30';
-    return 'bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-500/30';
+    if (val <= 10) return 'light:bg-emerald-500/10 light:text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 alter:bg-emerald-500/20 alter:text-emerald-400 border-emerald-500/30';
+    if (val <= 25) return 'light:bg-blue-500/10 light:text-blue-700 dark:bg-blue-500/15 dark:text-blue-400 alter:bg-blue-500/20 alter:text-blue-400 border-blue-500/30';
+    return 'light:bg-violet-500/10 light:text-violet-700 dark:bg-violet-500/15 dark:text-violet-400 alter:bg-violet-500/20 alter:text-violet-400 border-violet-500/30';
   };
 
   return (
@@ -238,9 +238,9 @@ function StatsBadge({
   variant: 'green' | 'purple' | 'orange';
 }) {
   const variants = {
-    green: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
-    purple: 'bg-violet-500/15 text-violet-700 dark:text-violet-400 border-violet-500/30',
-    orange: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30',
+    green: 'light:bg-emerald-500/15 light:text-emerald-700 light:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/40 alter:bg-emerald-500/20 alter:text-emerald-400 alter:border-emerald-500/30',
+    purple: 'light:bg-violet-500/15 light:text-violet-700 light:border-violet-500/30 dark:bg-violet-500/20 dark:text-violet-400 dark:border-violet-500/40 alter:bg-violet-500/20 alter:text-violet-400 alter:border-violet-500/30',
+    orange: 'light:bg-amber-500/15 light:text-amber-700 light:border-amber-500/30 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/40 alter:bg-amber-500/20 alter:text-amber-400 alter:border-amber-500/30',
   };
 
   return (
