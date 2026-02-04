@@ -1,5 +1,5 @@
 import CalendarioMensalRealTime from '../CalendarioMensalRealTime';
-import { ThemeSelector } from '@/components/ThemeSelector';
+import { ThemeSelector } from '../components/ThemeSelector';
 
 export default function Page() {
   return (
